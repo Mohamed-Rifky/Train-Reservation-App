@@ -7,8 +7,8 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group">
-                        <input type="text" value="" name="search" placeholder="Search Student"
-                               aria-label="Search Student" aria-describedby="Search Student" @input="search"
+                        <input type="text" value="" name="search" placeholder="Search Train"
+                               aria-label="Search Student" aria-describedby="Search Train" @input="search"
                                class="form-control" autocomplete="off" v-model="search_data">
                     </div>
                 </div>

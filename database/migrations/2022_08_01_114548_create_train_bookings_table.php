@@ -17,6 +17,8 @@ class CreateTrainBookingsTable extends Migration
             $table->id();
             $table->integer('train_id');
             $table->string('nic');
+            $table->string('name');
+            $table->string('contact_no');
             $table->timestamps();
             $table->softDeletes();
         });

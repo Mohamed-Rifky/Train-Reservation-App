@@ -5326,8 +5326,77 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "bookings"
+  name: "trains",
+  components: {},
+  data: function data() {
+    return {
+      loading: false,
+      searchByFilters: false,
+      trains: {},
+      search_data: "",
+      widowName: "",
+      edit: false,
+      passenger_data: {
+        nic: "",
+        name: "",
+        contact_no: "",
+        train_id: ""
+      }
+    };
+  },
+  mounted: function mounted() {
+    this.getTrains();
+  },
+  methods: {
+    getTrains: function getTrains() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.loading = true;
+      this.searchByFilters = false;
+      axios.get(flagsUrl + 'get_trains?page=' + page).then(function (data) {
+        _this.trains = data.data;
+      })["catch"](function (error) {
+        return console.log(error);
+      })["finally"](function () {
+        _this.loading = false;
+      });
+    },
+    search: function search() {
+      var _this2 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.searchByFilters = true;
+      this.loading = true;
+      axios.post(flagsUrl + 'get_trains?page=' + page, {
+        search: this.search_data
+      }).then(function (response) {
+        _this2.trains = response.data;
+      })["finally"](function () {
+        _this2.loading = false;
+      });
+    },
+    getTrain: function getTrain(id) {
+      var _this3 = this;
+
+      this.loading = true;
+      this.edit = true;
+      axios.get(flagsUrl + 'get_train/' + id).then(function (response) {})["finally"](function () {
+        _this3.loading = false;
+      });
+    },
+    showBooking: function showBooking(train_id) {
+      $("#train_modal").modal('show');
+      this.passenger_data.train_id = train_id;
+    },
+    closeModal: function closeModal() {
+      $("#train_modal").modal('hide');
+    }
+  }
 });
 
 /***/ }),
@@ -5527,10 +5596,266 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div");
+  return _c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_vm.loading ? _c("div", {
+    staticClass: "loading"
+  }, [_c("img", {
+    attrs: {
+      src: "images/loading.gif",
+      alt: ""
+    }
+  })]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-10"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.search_data,
+      expression: "search_data"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      value: "",
+      name: "search",
+      placeholder: "Search Train",
+      "aria-label": "Search Student",
+      "aria-describedby": "Search Train",
+      autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.search_data
+    },
+    on: {
+      input: [function ($event) {
+        if ($event.target.composing) return;
+        _vm.search_data = $event.target.value;
+      }, _vm.search]
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2"
+  }, [_c("div", {
+    staticClass: "btn-group",
+    attrs: {
+      role: "group",
+      "aria-label": "Action Buttons"
+    }
+  }, [_c("button", {
+    staticClass: "btn btn-primary float-right text-white btn-block",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.search
+    }
+  }, [_vm._v("Search Train\n                    ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-3"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "table-responsive"
+  }, [_c("table", {
+    staticClass: "table table-bordered table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.trains.data, function (train, key) {
+    return _c("tr", [_c("td", [_vm._v(" " + _vm._s(key + 1))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.train_name))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.date))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.time))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.no_of_seats))]), _vm._v(" "), _c("td", [_c("div", {
+      staticClass: "btn-group",
+      attrs: {
+        role: "group",
+        "aria-label": "Action Buttons"
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-primary float-right text-white btn-block",
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.showBooking(train.id);
+        }
+      }
+    }, [_vm._v("\n                                       Book\n                                    ")])])])]);
+  }), _vm._v(" "), _vm.trains.hasOwnProperty("data") && _vm.trains.data.length === 0 && !_vm.loading ? _c("tr", [_c("td", {
+    staticClass: "text-center h4",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_vm._v("No Trains Found")])]) : _vm._e()], 2)])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex justify-content-end mt-2"
+  }, [_vm.searchByFilters ? _c("pagination", {
+    attrs: {
+      data: _vm.trains,
+      limit: 2
+    },
+    on: {
+      "pagination-change-page": _vm.search
+    }
+  }) : _c("pagination", {
+    attrs: {
+      data: _vm.trains,
+      limit: 2
+    },
+    on: {
+      "pagination-change-page": _vm.getTrains
+    }
+  })], 1)])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "train_modal",
+      tabindex: "-1",
+      role: "dialog",
+      "aria-labelledby": "train_modal",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-lg modal-dialog-centered",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content rounded-0"
+  }, [_c("div", {
+    staticClass: "modal-body py-0"
+  }, [_c("div", {
+    staticClass: "p-2"
+  }, [_c("button", {
+    staticClass: "close float-right",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    },
+    on: {
+      click: _vm.closeModal
+    }
+  }, [_c("span", {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]), _vm._v(" "), _c("div", {
+    staticClass: "main-content"
+  }, [_c("h5", [_vm._v(_vm._s(_vm.widowName))]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-4 col-form-label text-md-right",
+    attrs: {
+      "for": "passenger_name"
+    }
+  }, [_vm._v(" Passenger Name")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.passenger_data.name,
+      expression: "passenger_data.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "passenger_name",
+      type: "text",
+      autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.passenger_data.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.passenger_data, "name", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-4 col-form-label text-md-right",
+    attrs: {
+      "for": "contact_no"
+    }
+  }, [_vm._v(" Contact No")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.passenger_data.contact_no,
+      expression: "passenger_data.contact_no"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "contact_no",
+      type: "text",
+      autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.passenger_data.contact_no
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.passenger_data, "contact_no", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-4 col-form-label text-md-right",
+    attrs: {
+      "for": "nic"
+    }
+  }, [_vm._v(" NIC")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.passenger_data.nic,
+      expression: "passenger_data.nic"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "nic",
+      type: "number",
+      autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.passenger_data.nic
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.passenger_data, "nic", $event.target.value);
+      }
+    }
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_vm.edit ? _c("button", {
+    staticClass: "btn btn-secondary float-right",
+    attrs: {
+      type: "button"
+    }
+  }, [_vm._v("Save\n                            ")]) : _vm._e()])])])])])])]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Departure Date")]), _vm._v(" "), _c("th", [_vm._v("Departure Time")]), _vm._v(" "), _c("th", [_vm._v("No Of Seats")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
+}];
 render._withStripped = true;
 
 
@@ -5581,9 +5906,9 @@ var render = function render() {
       type: "text",
       value: "",
       name: "search",
-      placeholder: "Search Student",
+      placeholder: "Search Train",
       "aria-label": "Search Student",
-      "aria-describedby": "Search Student",
+      "aria-describedby": "Search Train",
       autocomplete: "off"
     },
     domProps: {

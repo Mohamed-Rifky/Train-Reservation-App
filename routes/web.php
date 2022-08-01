@@ -22,6 +22,7 @@ use App\Http\Controllers\PublicAreaController;
 
 
 Route::get('/', [PublicAreaController::class, 'viewTrains'])->name('view_trains');
+Route::match(['get','post'],'/get_trains', [TrainController::class, 'getTrains'])->name('trains.get');
 Auth::routes(['register' => false]);
 
 Route::group(['middleware' => ['role:admin']], function () {
@@ -37,7 +38,6 @@ Route::group(['middleware' => ['role:admin']], function () {
 
     // Train Master Routes
     Route::get('/trains', [TrainController::class, 'trains'])->name('trains');
-    Route::match(['get','post'],'/get_trains', [TrainController::class, 'getTrains'])->name('trains.get');
     Route::post('/add_train', [TrainController::class, 'addTrain'])->name('trains.add');
     Route::get('/get_train/{id}', [TrainController::class, 'getTrain'])->name('trains.getTrain');
     Route::post('/update_train', [TrainController::class, 'updateTrain'])->name('trains.updateTrain');
