@@ -241,12 +241,13 @@ export default {
                         }).then(function () {
 
                         });
+                        this.getTrains();
+                        this.closeModal();
                     }
                 })
                 .catch((error) => console.log(error))
                 .finally(() => {
-                    this.getTrains();
-                    this.closeModal();
+
                 });
         },
         closeModal(){

@@ -5566,14 +5566,14 @@ __webpack_require__.r(__webpack_exports__);
             text: "Train Updated!",
             icon: "success"
           }).then(function () {});
+
+          _this5.getTrains();
+
+          _this5.closeModal();
         }
       })["catch"](function (error) {
         return console.log(error);
-      })["finally"](function () {
-        _this5.getTrains();
-
-        _this5.closeModal();
-      });
+      })["finally"](function () {});
     },
     closeModal: function closeModal() {
       $("#train_modal").modal('hide');
