@@ -5389,6 +5389,36 @@ __webpack_require__.r(__webpack_exports__);
         _this3.loading = false;
       });
     },
+    bookTrain: function bookTrain() {
+      var _this4 = this;
+
+      axios.post(flagsUrl + 'add_reservation', this.passenger_data).then(function (data) {
+        if (data.data.status === false) {
+          var html = "<div class='container small'><ul class='list-group'>";
+          $.each(data.data.error, function (errorKey, errorValue) {
+            html += "<li class='list-group-item text-left'>" + errorValue[0] + "</li>";
+          });
+          html += "</ul></div>";
+          sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
+            title: 'Error',
+            icon: 'error',
+            html: html
+          });
+        } else {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
+            title: "Success",
+            text: "Train Reserved Successfully",
+            icon: "success"
+          }).then(function () {});
+
+          _this4.getTrains();
+
+          _this4.closeModal();
+        }
+      })["catch"](function (error) {
+        return console.log(error);
+      })["finally"](function () {});
+    },
     showBooking: function showBooking(train_id) {
       $("#train_modal").modal('show');
       this.passenger_data.train_id = train_id;
@@ -5670,9 +5700,10 @@ var render = function render() {
         role: "group",
         "aria-label": "Action Buttons"
       }
-    }, [_c("button", {
+    }, [!train.hide ? _c("button", {
       staticClass: "btn btn-primary float-right text-white btn-block",
       attrs: {
+        disabled: train.not_bookable,
         type: "button"
       },
       on: {
@@ -5680,7 +5711,7 @@ var render = function render() {
           return _vm.showBooking(train.id);
         }
       }
-    }, [_vm._v("\n                                       Book\n                                    ")])])])]);
+    }, [_vm._v("\n                                       Book\n                                    ")]) : _vm._e()])])]);
   }), _vm._v(" "), _vm.trains.hasOwnProperty("data") && _vm.trains.data.length === 0 && !_vm.loading ? _c("tr", [_c("td", {
     staticClass: "text-center h4",
     attrs: {
@@ -5823,7 +5854,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       id: "nic",
-      type: "number",
+      type: "text",
       autocomplete: "off"
     },
     domProps: {
@@ -5836,19 +5867,7 @@ var render = function render() {
         _vm.$set(_vm.passenger_data, "nic", $event.target.value);
       }
     }
-  })])])])]), _vm._v(" "), _vm._m(1)])])])]);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Departure Date")]), _vm._v(" "), _c("th", [_vm._v("Departure Time")]), _vm._v(" "), _c("th", [_vm._v("No Of Seats")]), _vm._v(" "), _c("th", [_vm._v("Available Seats")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
+  })])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
   }, [_c("div", {
     staticClass: "row"
@@ -5858,8 +5877,18 @@ var staticRenderFns = [function () {
     staticClass: "btn btn-secondary float-right",
     attrs: {
       type: "button"
+    },
+    on: {
+      click: _vm.bookTrain
     }
-  }, [_vm._v("Save\n                            ")])])])]);
+  }, [_vm._v("Save\n                            ")])])])])])])])]);
+};
+
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Departure Date")]), _vm._v(" "), _c("th", [_vm._v("Departure Time")]), _vm._v(" "), _c("th", [_vm._v("No Of Seats")]), _vm._v(" "), _c("th", [_vm._v("Available Seats")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
 }];
 render._withStripped = true;
 

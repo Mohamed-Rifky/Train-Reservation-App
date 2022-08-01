@@ -29,7 +29,20 @@ class TrainController extends Controller
                 $trainDateTimeObj = Carbon::parse($train->departure_date_time);
                 $train->date = $trainDateTimeObj->format('Y-m-d');
                 $train->time = $trainDateTimeObj->format('h:i:s A');
-                $train->avialble_seats = $train->no_of_seats - $train->bookings->count();
+                $avSeats = $train->no_of_seats - $train->bookings->count();
+                $train->avialble_seats = $avSeats;
+                $now = Carbon::now();
+                if($avSeats == 0){
+                    $train->not_bookable = true;
+                } else {
+                    $train->not_bookable = false;
+                }
+
+                if($now->greaterThan($trainDateTimeObj)){
+                    $train->hide = true;
+                } else {
+                    $train->hide = false;
+                }
             }
         }
         return $trains;

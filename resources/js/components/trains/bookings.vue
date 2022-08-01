@@ -45,7 +45,7 @@
                                 <td> {{ train.avialble_seats }}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Action Buttons">
-                                        <button type="button" class="btn btn-primary float-right text-white btn-block"
+                                        <button v-if="!train.hide" :disabled="train.not_bookable" type="button" class="btn btn-primary float-right text-white btn-block"
                                                 @click="showBooking(train.id)">
                                            Book
                                         </button>
@@ -99,7 +99,7 @@
                                 <label for="nic"
                                        class="col-md-4 col-form-label text-md-right"> NIC</label>
                                 <div class="col-md-6">
-                                    <input id="nic" type="number"
+                                    <input id="nic" type="text"
                                            class="form-control" v-model="passenger_data.nic" autocomplete="off">
                                 </div>
                             </div>
@@ -108,7 +108,7 @@
                     <div class="modal-footer">
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-secondary float-right">Save
+                                <button type="button" class="btn btn-secondary float-right" @click="bookTrain">Save
                                 </button>
 
                             </div>
@@ -180,6 +180,37 @@ export default {
                 })
                 .finally(() => {
                     this.loading = false;
+                });
+        },
+        bookTrain(){
+            axios.post(flagsUrl + 'add_reservation', this.passenger_data)
+                .then((data) => {
+                    if (data.data.status === false) {
+                        let html = "<div class='container small'><ul class='list-group'>";
+                        $.each(data.data.error, (errorKey, errorValue) => {
+                            html += "<li class='list-group-item text-left'>" + errorValue[0] + "</li>";
+                        });
+                        html += "</ul></div>";
+                        Swal.fire({
+                            title: 'Error',
+                            icon: 'error',
+                            html: html,
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Success",
+                            text: "Train Reserved Successfully",
+                            icon: "success"
+                        }).then(function () {
+
+                        });
+                        this.getTrains();
+                        this.closeModal();
+                    }
+                })
+                .catch((error) => console.log(error))
+                .finally(() => {
+
                 });
         },
         showBooking(train_id){

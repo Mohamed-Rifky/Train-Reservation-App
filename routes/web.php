@@ -22,7 +22,10 @@ use App\Http\Controllers\PublicAreaController;
 
 
 Route::get('/', [PublicAreaController::class, 'viewTrains'])->name('view_trains');
+Route::post('/add_reservation', [PublicAreaController::class, 'addReservation'])->name('reservation.add');
+
 Route::match(['get','post'],'/get_trains', [TrainController::class, 'getTrains'])->name('trains.get');
+
 Auth::routes(['register' => false]);
 
 Route::group(['middleware' => ['role:admin']], function () {
