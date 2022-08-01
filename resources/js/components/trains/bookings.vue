@@ -31,6 +31,7 @@
                                 <th>Departure Date</th>
                                 <th>Departure Time</th>
                                 <th>No Of Seats</th>
+                                <th>Available Seats</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -41,6 +42,7 @@
                                 <td> {{ train.date }}</td>
                                 <td> {{ train.time }}</td>
                                 <td> {{ train.no_of_seats }}</td>
+                                <td> {{ train.avialble_seats }}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Action Buttons">
                                         <button type="button" class="btn btn-primary float-right text-white btn-block"
@@ -106,7 +108,7 @@
                     <div class="modal-footer">
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="button" v-if="edit" class="btn btn-secondary float-right">Save
+                                <button type="button" class="btn btn-secondary float-right">Save
                                 </button>
 
                             </div>

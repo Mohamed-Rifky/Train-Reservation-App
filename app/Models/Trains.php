@@ -14,4 +14,7 @@ class Trains extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+    public function bookings(){
+        return $this->hasMany(TrainBookings::class,'train_id','id');
+    }
 }

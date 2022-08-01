@@ -5664,7 +5664,7 @@ var render = function render() {
   }, [_c("table", {
     staticClass: "table table-bordered table-hover"
   }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.trains.data, function (train, key) {
-    return _c("tr", [_c("td", [_vm._v(" " + _vm._s(key + 1))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.train_name))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.date))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.time))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.no_of_seats))]), _vm._v(" "), _c("td", [_c("div", {
+    return _c("tr", [_c("td", [_vm._v(" " + _vm._s(key + 1))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.train_name))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.date))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.time))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.no_of_seats))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(train.avialble_seats))]), _vm._v(" "), _c("td", [_c("div", {
       staticClass: "btn-group",
       attrs: {
         role: "group",
@@ -5836,25 +5836,30 @@ var render = function render() {
         _vm.$set(_vm.passenger_data, "nic", $event.target.value);
       }
     }
-  })])])])]), _vm._v(" "), _c("div", {
-    staticClass: "modal-footer"
-  }, [_c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-md-12"
-  }, [_vm.edit ? _c("button", {
-    staticClass: "btn btn-secondary float-right",
-    attrs: {
-      type: "button"
-    }
-  }, [_vm._v("Save\n                            ")]) : _vm._e()])])])])])])]);
+  })])])])]), _vm._v(" "), _vm._m(1)])])])]);
 };
 
 var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Departure Date")]), _vm._v(" "), _c("th", [_vm._v("Departure Time")]), _vm._v(" "), _c("th", [_vm._v("No Of Seats")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Departure Date")]), _vm._v(" "), _c("th", [_vm._v("Departure Time")]), _vm._v(" "), _c("th", [_vm._v("No Of Seats")]), _vm._v(" "), _c("th", [_vm._v("Available Seats")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary float-right",
+    attrs: {
+      type: "button"
+    }
+  }, [_vm._v("Save\n                            ")])])])]);
 }];
 render._withStripped = true;
 

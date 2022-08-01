@@ -16,19 +16,20 @@ class TrainController extends Controller
     public function getTrains(Request $request){
         $method = $request->method();
         if ($method === 'POST') {
-            $trains = Trains::query();
+            $trains = Trains::with('bookings');
             if($request->search){
                 $trains->where('train_name', 'LIKE', "%{$request->search}%");
             }
             $trains = $trains->paginate(10);
         } else {
-            $trains = Trains::paginate(10);
+            $trains = Trains::with('bookings')->paginate(10);
         }
         if($trains){
             foreach ($trains as $train){
                 $trainDateTimeObj = Carbon::parse($train->departure_date_time);
                 $train->date = $trainDateTimeObj->format('Y-m-d');
                 $train->time = $trainDateTimeObj->format('h:i:s A');
+                $train->avialble_seats = $train->no_of_seats - $train->bookings->count();
             }
         }
         return $trains;
