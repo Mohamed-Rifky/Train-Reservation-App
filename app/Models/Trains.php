@@ -10,6 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Trains extends Model
 {
     use HasFactory,softDeletes;
+    protected $fillable = [
+        'train_name',
+        'departure_date_time',
+        'no_of_seats',
+    ];
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
