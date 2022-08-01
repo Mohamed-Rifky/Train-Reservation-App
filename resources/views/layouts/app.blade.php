@@ -26,7 +26,7 @@
         @include('layouts.partials.sidebar')
     @endif
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div  @if(\Route::current()->getName() !== 'view_trains') class="content-wrapper" @endif>
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
